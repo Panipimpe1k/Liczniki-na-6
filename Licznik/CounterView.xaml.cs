@@ -13,8 +13,8 @@ public partial class CounterView : ContentView
 	{
         InitializeComponent();
 		CounterName = name;
-        _value = startValue;
-        _initialValue = startValue;
+        _value = startValue; // z tym
+        _initialValue = startValue; // sprawdz czy to siê nie gryzie
         _onValueChanged = onValueChange;
 
         NameLabel.Text = name;
@@ -23,21 +23,21 @@ public partial class CounterView : ContentView
         this.BackgroundColor = color;
     }
 
-    private void OnPlusClicked(object? sender, EventArgs e)
+    private void OnPlusClicked(object? sender, EventArgs e) // PLUS
     {
         _value++;
         UpdateValue();
         _onValueChanged?.Invoke();
     }
 
-    private void OnMinusClicked(object? sender, EventArgs e)
+    private void OnMinusClicked(object? sender, EventArgs e) // MINUS
     {
         _value--;
         UpdateValue();
         _onValueChanged?.Invoke();
     }
 
-    private void OnDeleteClicked(object? sender, EventArgs e)
+    private void OnDeleteClicked(object? sender, EventArgs e) // USUÑ
     {
         if(Parent is Layout parentLayout)
         {
@@ -46,7 +46,7 @@ public partial class CounterView : ContentView
         }
     }
 
-    private void OnResetClicked(object? sender, EventArgs e)
+    private void OnResetClicked(object? sender, EventArgs e) // RESET DO PODSTAWOWEJ WARTOŒCI
     {
         if (Parent is Layout parentLayout)
         {
@@ -56,7 +56,7 @@ public partial class CounterView : ContentView
         }
     }
 
-    private void UpdateValue()
+    private void UpdateValue() // Tutaj jest auto-zapis po naciœniêciu guzika
     {
         ValueLabel.Text = _value.ToString();
     }
