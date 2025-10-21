@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Microsoft.Maui.Graphics; //inaczej nie zrobie tych kolorów
 namespace Licznik
 {
     public partial class MainPage : ContentPage
@@ -13,25 +12,22 @@ namespace Licznik
 
         private void OnAddCounterClicked(object? sender, EventArgs e)
         {
-            var name = string.IsNullOrWhiteSpace(CounterNameEntry.Text) ? "Unnamed" : CounterNameEntry.Text; // Dodawanie nazwy licznika, lub barku jeżeli nie została wpisana
-
+            var name = string.IsNullOrWhiteSpace(CounterNameEntry.Text) ? "Unnamed" : CounterNameEntry.Text;
             int startValue = 0;
             int.TryParse(StartValueEntry.Text, out startValue);
 
-            //kontynuacja nowoczesnego wybierania kolorów
             var r = (float)RedSlider.Value / 255f;
             var g = (float)GreenSlider.Value / 255f;
             var b = (float)BlueSlider.Value / 255f;
-            var color = Color.FromRgb(r, g, b); // FUNKCJA FROM RGB RATUJE ŻYCIE nie działa
+            var color = Color.FromRgb(r, g, b);
 
-            var counter = new CounterView(name,startValue, SaveCounters, color);//nowy licznik
+            var counter = new CounterView(name, startValue, SaveCounters, color);
 
             CounterContainer.Children.Add(counter);
 
             CounterNameEntry.Text = string.Empty;
             StartValueEntry.Text = string.Empty;
 
-            // reset suwaków
             RedSlider.Value = 0;
             GreenSlider.Value = 0;
             BlueSlider.Value = 0;
@@ -47,14 +43,16 @@ namespace Licznik
         private void SaveCounters()
         {
             var data = CounterContainer.Children
-            .OfType<CounterView>() // to filtruje children żeby nie wyświetlała niepotrzebnych rzeczy
-            .Select(c => new CounterData { 
-                Name = c.CounterName, 
-                Value = c.GetValue(), 
-                ColorHex = c.BackgroundColor.ToHex()}) // To tworzy nowe liczniki i przypisuje im wartości z counterview NIE DZIALA BEZ HEX
-            .ToList(); // wykonuje to co wcześniej napisałam i nie trzeba się męczyć bo samo wykonuje liste :)
+            .OfType<CounterView>()
+            .Select(c => new CounterData
+            {
+                Name = c.CounterName,
+                Value = c.GetValue(),
+                ColorHex = c.BackgroundColor.ToHex()
+            })
+            .ToList();
 
-            var json = JsonSerializer.Serialize(data); // Przemienia dane w stringa żeby można go było zapisać w .jsonie!
+            var json = JsonSerializer.Serialize(data);
             Preferences.Set(SaveData, json);
         }
 
@@ -63,35 +61,32 @@ namespace Licznik
             if (!Preferences.ContainsKey(SaveData)) return;
 
             var json = Preferences.Get(SaveData, string.Empty);
-            var data = JsonSerializer.Deserialize<List<CounterData>>(json); // Tutaj zamienia ze stringa w normalne wartości
+            var data = JsonSerializer.Deserialize<List<CounterData>>(json);
 
-            foreach (var c in data) // c = pojedyńczy obiekt w data
-                                        //c = CounterData { Name = "Pomidor", Value = 3 } taki przykład
+            foreach (var c in data)
             {
-             Color color = Colors.DarkGray;
+                Color color = Colors.DarkGray;
                 if (!string.IsNullOrEmpty(c.ColorHex))
                 {
-                try
-                {
-                    color = Color.FromArgb(c.ColorHex);
-                 }
+                    try
+                    {
+                        color = Color.FromArgb(c.ColorHex);
+                    }
                     catch
                     {
                         color = Colors.DarkGray;
-                    }   
+                    }
                 }
-                    var counter = new CounterView(c.Name, c.Value, SaveCounters, color); // i tutaj pętla nam ładnie robi obiekty
-                    CounterContainer.Children.Add(counter); // i je dodaje
+                var counter = new CounterView(c.Name, c.Value, SaveCounters, color);
+                CounterContainer.Children.Add(counter);
             }
         }
-    }
 
-    public class CounterData
-    {
-        public string Name { get; set; } //= string.Empty; // Tutaj jest jakiś problem z name
-        public int Value { get; set; }
-        public string ColorHex { get; set; } = "A9A9A9"; //niech będzie biały normalnie
+        public class CounterData
+        {
+            public string Name { get; set; }
+            public int Value { get; set; }
+            public string ColorHex { get; set; } = "A9A9A9";
+        }
     }
 }
-
-// SERIALIZACJA nie sterylizacja

@@ -13,9 +13,9 @@
             <Button Text="Add Counter" Clicked="OnAddCounterClicked"/>
         </HorizontalStackLayout>
 
-       
+
         <HorizontalStackLayout Spacing="5" VerticalOptions="Center" Grid.Row="1">
-         <Label Text="Choose Color:"/> <!-- NAJBARDZIEJ NIEWYGODNE WYBIERANIE KOLORU NA ŚWIECIE -->    
+            <Label Text="Choose Color:"/>
             <Label Text="R (red)"/>
             <Slider x:Name="RedSlider" Minimum="0" Maximum="255" WidthRequest="100"/>
             <Label Text="G (green)"/>
@@ -25,7 +25,7 @@
         </HorizontalStackLayout>
 
 
-        
+
         <ScrollView Grid.Row="2">
             <VerticalStackLayout x:Name="CounterContainer" Spacing="10" VerticalOptions="Start"/>
         </ScrollView>
@@ -33,7 +33,3 @@
 
 
 </ContentPage>
-<!--
-Scroll|View nie działa więc używamy grida auto,auto i * żeby było rozciągalne 
-
--->
