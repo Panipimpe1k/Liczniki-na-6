@@ -10,22 +10,11 @@
                    WidthRequest="380"/>
             <Entry x:Name="StartValueEntry" Placeholder="Enter start value"
                    WidthRequest="200"/>
-            <Button Text="Add Counter" Clicked="OnAddCounterClicked"/>
+
         </HorizontalStackLayout>
-
-       
-        <HorizontalStackLayout Spacing="5" VerticalOptions="Center" Grid.Row="1">
-         <Label Text="Choose Color:"/> <!-- NAJBARDZIEJ NIEWYGODNE WYBIERANIE KOLORU NA ŚWIECIE -->    
-            <Label Text="R (red)"/>
-            <Slider x:Name="RedSlider" Minimum="0" Maximum="255" WidthRequest="100"/>
-            <Label Text="G (green)"/>
-            <Slider x:Name="GreenSlider" Minimum="0" Maximum="255" WidthRequest="100"/>
-            <Label Text="B (blue)"/>
-            <Slider x:Name="BlueSlider" Minimum="0" Maximum="255" WidthRequest="100"/>
-        </HorizontalStackLayout>
+        <Button Text="Add Counter" Clicked="OnAddCounterClicked" Grid.Row="1"/>
 
 
-        
         <ScrollView Grid.Row="2">
             <VerticalStackLayout x:Name="CounterContainer" Spacing="10" VerticalOptions="Start"/>
         </ScrollView>
@@ -33,7 +22,3 @@
 
 
 </ContentPage>
-<!--
-Scroll|View nie działa więc używamy grida auto,auto i * żeby było rozciągalne 
-
--->

@@ -9,45 +9,42 @@ public partial class CounterView : ContentView
     public string CounterName { get; set; }
     private readonly Action _onValueChanged;
 
-	public CounterView(string name, int startValue, Action onValueChange,Color color)
+	public CounterView(string name, int startValue, Action onValueChange)
 	{
         InitializeComponent();
 		CounterName = name;
-        _value = startValue; // z tym
-        _initialValue = startValue; // sprawdz czy to siê nie gryzie
+        _value = startValue;
+        _initialValue = startValue;
         _onValueChanged = onValueChange;
 
         NameLabel.Text = name;
 		UpdateValue();
-
-        this.BackgroundColor = color;
     }
 
-    private void OnPlusClicked(object? sender, EventArgs e) // PLUS
+    private void OnPlusClicked(object? sender, EventArgs e)
     {
         _value++;
         UpdateValue();
         _onValueChanged?.Invoke();
     }
 
-    private void OnMinusClicked(object? sender, EventArgs e) // MINUS
+    private void OnMinusClicked(object? sender, EventArgs e)
     {
         _value--;
         UpdateValue();
         _onValueChanged?.Invoke();
     }
 
-    private void OnDeleteClicked(object? sender, EventArgs e) // USUÑ
+    private void OnDeleteClicked(object? sender, EventArgs e)
     {
         if(Parent is Layout parentLayout)
         {
             parentLayout.Children.Remove(this);
             _onValueChanged?.Invoke();
-            // Przyciski to dzieci :)
         }
     }
 
-    private void OnResetClicked(object? sender, EventArgs e) // RESET DO PODSTAWOWEJ WARTOŒCI
+    private void OnResetClicked(object? sender, EventArgs e)
     {
         if (Parent is Layout parentLayout)
         {
@@ -57,7 +54,7 @@ public partial class CounterView : ContentView
         }
     }
 
-    private void UpdateValue() // Tutaj jest auto-zapis po naciœniêciu guzika
+    private void UpdateValue()
     {
         ValueLabel.Text = _value.ToString();
     }
