@@ -43,7 +43,6 @@ public partial class CounterView : ContentView
         {
             parentLayout.Children.Remove(this);
             _onValueChanged?.Invoke();
-            // Przyciski to dzieci :)
         }
     }
 
